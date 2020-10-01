@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/OpenDGLab-Connect/precache-manifest.fc848e45a595556fad6c705e9befa555.js"
+  "/OpenDGLab-Connect/precache-manifest.df369b348f249f78c992e4d192df3fdf.js"
 );
 
 self.addEventListener('message', (event) => {
