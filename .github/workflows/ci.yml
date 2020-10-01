@@ -24,7 +24,7 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
       - name: Use CI PackageJson
-        run: 
+        run: |
           mv package.json package.user.json
           mv package.ci.json package.json
       - name: Install modules
