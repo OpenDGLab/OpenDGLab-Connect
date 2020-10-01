@@ -2,6 +2,7 @@
   "name": "opendglab-connect",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/OpenDGLab-Connect/",
   "dependencies": {
     "@alifd/next": "^1.20.28",
     "@alifd/theme-16484": "^0.1.0",

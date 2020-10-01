@@ -6,7 +6,7 @@ import './App.scss';
 import App from './App';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/OpenDGLab-Connect/">
     <App />
   </BrowserRouter>,
   document.getElementById('root')
