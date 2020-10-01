@@ -1,0 +1,10 @@
+{
+  "main": "kotlinx-serialization-kotlinx-serialization-json-jsLegacy.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [],
+  "name": "kotlinx-serialization-kotlinx-serialization-json-jsLegacy",
+  "version": "1.0.0-RC2"
+}

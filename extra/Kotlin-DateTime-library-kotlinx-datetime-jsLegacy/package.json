@@ -1,0 +1,12 @@
+{
+  "main": "Kotlin-DateTime-library-kotlinx-datetime-jsLegacy.js",
+  "devDependencies": {},
+  "dependencies": {
+    "@js-joda/core": "3.0.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [],
+  "name": "Kotlin-DateTime-library-kotlinx-datetime-jsLegacy",
+  "version": "0.1.0"
+}
