@@ -1,6 +1,8 @@
 # OpenDGLab Connect
 OpenDGLab Connect 旨在使用现代网页技术操作 DG-Lab 设备，由于网页可以被打开多份，所以您可以连接到多个 DG-Lab 终端设备。
 
+您需要一个支持 WebBluetooth 的设备和浏览器才能正常使用。
+
 ## 已经支持的功能
  * 登录到 DG-Lab 服务器
  * 使用 WebBluetooth 控制 DG-Lab 设备

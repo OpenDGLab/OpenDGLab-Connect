@@ -22,11 +22,14 @@ class Local extends React.Component {
         waveB: WaveCenter.Companion.getBasicWaveList()[0],
         dataA: [],
         dataB: [],
-        waveLag: 0
+        waveLagA: 0,
+        waveLagB: 0
     }
-    lastData = Date.now()
+    lastDataA = Date.now()
+    lastDataB = Date.now()
     labels = new Array(100).fill('')
-    timer = null
+    timerA = null
+    timerB = null
     get dataA() {
         return {
             labels: this.labels,
@@ -175,47 +178,48 @@ class Local extends React.Component {
         window.addEventListener('strengthchanged', this.handleStrengthAB)
         window.addEventListener('waveAchanged', this.handleWaveChangeA)
         window.addEventListener('waveBchanged', this.handleWaveChangeB)
-        this.timer = setInterval(()=> {
+        this.timerA = setInterval(()=> {
             if (window.dgble && this.state.isConnect) {
-                let lag = Date.now() - this.lastData
+                let lag = Date.now() - this.lastDataA
                 let wlag = 0
                 if (lag > 100) {
                     wlag = Math.ceil((lag - 100)/100.0)
                 }
-                this.setState({ waveLag: wlag })
-                this.lastData = Date.now()
-                let waveA
-                if (this.state.strengthA === 0) {
-                    waveA = WaveCenter.Companion.stop()
-                } else {
-                    waveA = window.dglab.eStimStatus.wave.getWaveCenterA().waveTick()
-                    let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterA().getWavePlot())
-                    let plotData = this.state.dataA.concat(plot)
-                    if (plotData.length > 100) {
-                        plotData = plotData.slice(plotData.length - 100)
-                    }
-                    this.setState({
-                        dataA: plotData
-                    })
+                this.setState({ waveLagA: wlag })
+                this.lastDataA = Date.now()
+                let waveA = window.dglab.eStimStatus.wave.getWaveCenterA().waveTick()
+                let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterA().getWavePlot())
+                let plotData = this.state.dataA.concat(plot)
+                if (plotData.length > 100) {
+                    plotData = plotData.slice(plotData.length - 100)
                 }
-                if (waveA === null) waveA = WaveCenter.Companion.stop()
-                window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveA))
-                let waveB
-                if (this.state.strengthB === 0) {
-                    waveB = WaveCenter.Companion.stop()
-                } else {
-                    waveB = window.dglab.eStimStatus.wave.getWaveCenterB().waveTick()
-                    let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterB().getWavePlot())
-                    let plotData = this.state.dataB.concat(plot)
-                    if (plotData.length > 100) {
-                        plotData = plotData.slice(plotData.length - 100)
-                    }
-                    this.setState({
-                        dataB: plotData
-                    })
+                this.setState({
+                    dataA: plotData
+                })
+                if (waveA !== null)
+                  window.dgble.eStimStatus.waveB.writeValueWithoutResponse(Uint8Array.from(waveA))
+            }
+        }, 100)
+        this.timerB = setInterval(() => {
+            if (window.dgble && this.state.isConnect) {
+                let lag = Date.now() - this.lastDataB
+                let wlag = 0
+                if (lag > 100) {
+                    wlag = Math.ceil((lag - 100)/100.0)
                 }
-                if (waveB === null) waveB = WaveCenter.Companion.stop()
-                window.dgble.eStimStatus.waveB.writeValueWithoutResponse(Uint8Array.from(waveB))
+                this.setState({ waveLagB: wlag })
+                this.lastDataB = Date.now()
+                let waveB = window.dglab.eStimStatus.wave.getWaveCenterB().waveTick()
+                let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterB().getWavePlot())
+                let plotData = this.state.dataB.concat(plot)
+                if (plotData.length > 100) {
+                    plotData = plotData.slice(plotData.length - 100)
+                }
+                this.setState({
+                    dataB: plotData
+                })
+                if (waveB !== null)
+                  window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
             }
         }, 100)
     }
@@ -224,8 +228,11 @@ class Local extends React.Component {
             window.removeEventListener('strengthchanged', this.handleStrengthAB)
             window.removeEventListener('waveAchanged', this.handleWaveChangeA)
             window.removeEventListener('waveBchanged', this.handleWaveChangeB)
-            if (this.timer) {
-                clearInterval(this.timer)
+            if (this.timerA) {
+                clearInterval(this.timerA)
+            }
+            if (this.timerB) {
+                clearInterval(this.timerB)
             }
             window.dgble.eStimStatus.abpower.stopNotifications().then(_ => {
                 window.dgble.eStimStatus.abpower.removeEventListener('characteristicvaluechanged', window.dglab.handler.abpower)
@@ -258,7 +265,7 @@ class Local extends React.Component {
                     <Row gutter={8} justify="center">
                         <Col xs={12} m={12} s={8}>
                             <Card free>
-                                <Card.Header title="A 通道" subTitle={`发送延迟 ${this.state.waveLag} 个数据包`}/>
+                                <Card.Header title="A 通道" subTitle={`发送延迟 ${this.state.waveLagA} 个数据包`}/>
                                 <Card.Content>
                                     <p>强度 <span>{this.state.strengthA}</span></p>
                                     <Divider />
@@ -277,7 +284,7 @@ class Local extends React.Component {
                         </Col>
                         <Col xs={12} m={12} s={8}>
                             <Card free>
-                                <Card.Header title="B 通道" subTitle={`发送延迟 ${this.state.waveLag} 个数据包`}/>
+                                <Card.Header title="B 通道" subTitle={`发送延迟 ${this.state.waveLagB} 个数据包`}/>
                                 <Card.Content>
                                     <p>强度 <span>{this.state.strengthB}</span></p>
                                     <Divider />
@@ -308,7 +315,6 @@ class Local extends React.Component {
                                         data={this.dataA}
                                         height={250}
                                         options={this.options}
-                                        redraw={true}
                                     />
                                     </div>
                                     <Divider />
@@ -327,7 +333,6 @@ class Local extends React.Component {
                                         data={this.dataB}
                                         height={250}
                                         options={this.options}
-                                        redraw={true}
                                     />
                                     </div>
                                     <Divider />
