@@ -19,7 +19,7 @@ function ModeSelection({auth, showAuth}) {
     return (
         <div>
             <div style={{ width: '100%', padding: '16px' }}>
-                <center><img src="OpenDGLab-Remote.svg" style={{ width: '256px' }} alt=""></img></center>
+                <center><img src="OpenDGLab-Connect.svg" style={{ width: '256px' }} alt=""></img></center>
                 <center><Typography.H1>OpenDGLab Connect</Typography.H1></center>
                 <p></p>
                 <center><Button type="normal" warning size="large" className="odgl-p-a-1 odgl-flexable-fullwidth" onClick={onClickShowAuth}>{auth}</Button></center>
