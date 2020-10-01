@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/OpenDGLab-Connect/static/css/main.d6d40d08.chunk.css",
-    "main.js": "/OpenDGLab-Connect/static/js/main.c6dd8283.chunk.js",
-    "main.js.map": "/OpenDGLab-Connect/static/js/main.c6dd8283.chunk.js.map",
+    "main.js": "/OpenDGLab-Connect/static/js/main.9351b3c6.chunk.js",
+    "main.js.map": "/OpenDGLab-Connect/static/js/main.9351b3c6.chunk.js.map",
     "runtime-main.js": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js",
     "runtime-main.js.map": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js.map",
     "static/js/2.000d63f6.chunk.js": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js",
     "static/js/2.000d63f6.chunk.js.map": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js.map",
     "index.html": "/OpenDGLab-Connect/index.html",
-    "precache-manifest.8cc3bf2274850d860d9f54fafc939cc2.js": "/OpenDGLab-Connect/precache-manifest.8cc3bf2274850d860d9f54fafc939cc2.js",
+    "precache-manifest.fc848e45a595556fad6c705e9befa555.js": "/OpenDGLab-Connect/precache-manifest.fc848e45a595556fad6c705e9befa555.js",
     "service-worker.js": "/OpenDGLab-Connect/service-worker.js",
     "static/css/main.d6d40d08.chunk.css.map": "/OpenDGLab-Connect/static/css/main.d6d40d08.chunk.css.map",
     "static/js/2.000d63f6.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/OpenDGLab-Connect/static/media/logo.db4e732a.svg"
+    "static/media/logo.svg": "/OpenDGLab-Connect/static/media/logo.1cd43fc4.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.a78c9708.js",
     "static/js/2.000d63f6.chunk.js",
     "static/css/main.d6d40d08.chunk.css",
-    "static/js/main.c6dd8283.chunk.js"
+    "static/js/main.9351b3c6.chunk.js"
   ]
 }

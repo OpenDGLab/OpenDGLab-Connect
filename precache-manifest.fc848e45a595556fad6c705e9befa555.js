@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b14d73d6a424b273bfc06c78d01b46da",
+    "revision": "64a6da1fd81ecc32cd0a4b7078e6b1b7",
     "url": "/OpenDGLab-Connect/index.html"
   },
   {
-    "revision": "ace93090412b400eed6a",
+    "revision": "71391c6abfac2af11568",
     "url": "/OpenDGLab-Connect/static/css/main.d6d40d08.chunk.css"
   },
   {
@@ -16,15 +16,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ace93090412b400eed6a",
-    "url": "/OpenDGLab-Connect/static/js/main.c6dd8283.chunk.js"
+    "revision": "71391c6abfac2af11568",
+    "url": "/OpenDGLab-Connect/static/js/main.9351b3c6.chunk.js"
   },
   {
     "revision": "b3560edfcba8b7449dc9",
     "url": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js"
   },
   {
-    "revision": "db4e732acb85071c5ed45c61c7796e23",
-    "url": "/OpenDGLab-Connect/static/media/logo.db4e732a.svg"
+    "revision": "1cd43fc417ec1dae8cb7f7eaaf6d2e66",
+    "url": "/OpenDGLab-Connect/static/media/logo.1cd43fc4.svg"
   }
 ]);
