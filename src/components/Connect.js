@@ -19,6 +19,14 @@ class Connect extends React.Component {
             }
         }
     }
+    onClickStartRemote = () => {
+        let { setRemoteMode } = this.props
+        if (setRemoteMode(true)) {
+
+        } else {
+
+        }
+    }
     onConnectClick = () => {
         navigator.bluetooth.requestDevice({filters:[{name: OpenDGLab.Device.Companion.getName()}], optionalServices: OpenDGLab.Device.Companion.services()}).then((device) => {
             if (device.gatt) {
@@ -57,6 +65,8 @@ class Connect extends React.Component {
                     })
                     fireChange('waveAchanged')
                     fireChange('waveBchanged')
+                    let power = window.dglab.eStimStatus.abPower.setABPower(0, 0)
+                    window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
                     this.props.connCallback(true)
                     this.setState({ wait: false })
                 }).catch((error) => {
@@ -86,7 +96,7 @@ class Connect extends React.Component {
                 connect = (
                     <center>
                         <p>电量： {this.state.power}%</p>
-                        <Button type="normal" style={{ margin: '4px' }} warning disabled>启动远程模式</Button>
+                        <Button type="normal" style={{ margin: '4px' }} warning onClick={this.onClickStartRemote}>启动远程模式</Button>
                     </center>
                 )
             }

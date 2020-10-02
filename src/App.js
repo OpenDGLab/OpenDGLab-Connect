@@ -73,7 +73,7 @@ class App extends React.Component {
     return (
       <div className="App">
           {auth}
-            <Router basename="/OpenDGLab-Connect">
+            <Router>{ /*basename="/OpenDGLab-Connect"*/ }
               <Switch>
                 <Route exact path="/">
                   <ModeSelection auth={this.state.logined} showAuth={this.setAuthDialogOpen} />

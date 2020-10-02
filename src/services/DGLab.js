@@ -977,11 +977,11 @@
         var conf = split(ss.get_za3lpa$(0), [',']);
         if (conf.size === 19) {
           var p1 = split(ss.get_za3lpa$(1), [',']);
-          if (p1.size === toInt_0(ss.get_za3lpa$(6))) {
+          if (p1.size === toInt_0(conf.get_za3lpa$(6))) {
             var p2 = split(ss.get_za3lpa$(2), [',']);
-            if (toInt_0(ss.get_za3lpa$(15)) === 1 && p2.size === toInt_0(ss.get_za3lpa$(7))) {
+            if (toInt_0(conf.get_za3lpa$(15)) === 1 && p2.size === toInt_0(conf.get_za3lpa$(7)) || (toInt_0(conf.get_za3lpa$(15)) === 0 && equals(p2.get_za3lpa$(0), ''))) {
               var p3 = split(ss.get_za3lpa$(3), [',']);
-              if (toInt_0(ss.get_za3lpa$(16)) === 1 && p3.size === toInt_0(ss.get_za3lpa$(8))) {
+              if (toInt_0(conf.get_za3lpa$(16)) === 1 && p3.size === toInt_0(conf.get_za3lpa$(8)) || (toInt_0(conf.get_za3lpa$(16)) === 0 && equals(p3.get_za3lpa$(0), ''))) {
                 var tmp$, tmp$_0;
                 var index = 0;
                 tmp$ = p1.iterator();
@@ -997,55 +997,57 @@
                   } else
                     return null;
                 }
-                var tmp$_1, tmp$_0_0;
-                var index_1 = 0;
-                tmp$_1 = p2.iterator();
-                while (tmp$_1.hasNext()) {
-                  var item_0 = tmp$_1.next();
-                  var index_2 = checkIndexOverflow((tmp$_0_0 = index_1, index_1 = tmp$_0_0 + 1 | 0, tmp$_0_0));
-                  var p_0 = split(item_0, ['=']);
-                  if (p_0.size === 2) {
-                    var anchor_0 = toInt_0(p_0.get_za3lpa$(1));
-                    if (anchor_0 !== 0 && anchor_0 !== 1)
+                if (toInt_0(conf.get_za3lpa$(15)) === 1) {
+                  var tmp$_1, tmp$_0_0;
+                  var index_1 = 0;
+                  tmp$_1 = p2.iterator();
+                  while (tmp$_1.hasNext()) {
+                    var item_0 = tmp$_1.next();
+                    var index_2 = checkIndexOverflow((tmp$_0_0 = index_1, index_1 = tmp$_0_0 + 1 | 0, tmp$_0_0));
+                    var p_0 = split(item_0, ['=']);
+                    if (p_0.size === 2) {
+                      var anchor_0 = toInt_0(p_0.get_za3lpa$(1));
+                      if (anchor_0 !== 0 && anchor_0 !== 1)
+                        return null;
+                      points2.add_11rb$(new WaveCenter$BasicDataBean(index_2, toDouble(p_0.get_za3lpa$(0)), anchor_0));
+                    } else
                       return null;
-                    points2.add_11rb$(new WaveCenter$BasicDataBean(index_2, toDouble(p_0.get_za3lpa$(0)), anchor_0));
-                  } else
-                    return null;
-                }
-                var tmp$_2, tmp$_0_1;
-                var index_3 = 0;
-                tmp$_2 = p3.iterator();
-                while (tmp$_2.hasNext()) {
-                  var item_1 = tmp$_2.next();
-                  var index_4 = checkIndexOverflow((tmp$_0_1 = index_3, index_3 = tmp$_0_1 + 1 | 0, tmp$_0_1));
-                  var p_1 = split(item_1, ['=']);
-                  if (p_1.size === 2) {
-                    var anchor_1 = toInt_0(p_1.get_za3lpa$(1));
-                    if (anchor_1 !== 0 && anchor_1 !== 1)
+                  }
+                }if (toInt_0(conf.get_za3lpa$(16)) === 1) {
+                  var tmp$_2, tmp$_0_1;
+                  var index_3 = 0;
+                  tmp$_2 = p3.iterator();
+                  while (tmp$_2.hasNext()) {
+                    var item_1 = tmp$_2.next();
+                    var index_4 = checkIndexOverflow((tmp$_0_1 = index_3, index_3 = tmp$_0_1 + 1 | 0, tmp$_0_1));
+                    var p_1 = split(item_1, ['=']);
+                    if (p_1.size === 2) {
+                      var anchor_1 = toInt_0(p_1.get_za3lpa$(1));
+                      if (anchor_1 !== 0 && anchor_1 !== 1)
+                        return null;
+                      points3.add_11rb$(new WaveCenter$BasicDataBean(index_4, toDouble(p_1.get_za3lpa$(0)), anchor_1));
+                    } else
                       return null;
-                    points3.add_11rb$(new WaveCenter$BasicDataBean(index_4, toDouble(p_1.get_za3lpa$(0)), anchor_1));
-                  } else
-                    return null;
-                }
-                var a0 = toInt_0(ss.get_za3lpa$(0));
-                var a1 = toInt_0(ss.get_za3lpa$(1));
-                var a2 = toInt_0(ss.get_za3lpa$(2));
-                var b0 = toInt_0(ss.get_za3lpa$(3));
-                var b1 = toInt_0(ss.get_za3lpa$(4));
-                var b2 = toInt_0(ss.get_za3lpa$(5));
-                var c0 = toInt_0(ss.get_za3lpa$(6));
-                var c1 = toInt_0(ss.get_za3lpa$(7));
-                var c2 = toInt_0(ss.get_za3lpa$(8));
-                var j0 = toInt_0(ss.get_za3lpa$(9));
-                var j1 = toInt_0(ss.get_za3lpa$(10));
-                var j2 = toInt_0(ss.get_za3lpa$(11));
-                var pc0 = toInt_0(ss.get_za3lpa$(12));
-                var pc1 = toInt_0(ss.get_za3lpa$(13));
-                var pc2 = toInt_0(ss.get_za3lpa$(14));
-                var jie1 = toInt_0(ss.get_za3lpa$(15));
-                var jie2 = toInt_0(ss.get_za3lpa$(16));
-                var l = toInt_0(ss.get_za3lpa$(17));
-                var zy = toInt_0(ss.get_za3lpa$(18));
+                  }
+                }var a0 = toInt_0(conf.get_za3lpa$(0));
+                var a1 = toInt_0(conf.get_za3lpa$(1));
+                var a2 = toInt_0(conf.get_za3lpa$(2));
+                var b0 = toInt_0(conf.get_za3lpa$(3));
+                var b1 = toInt_0(conf.get_za3lpa$(4));
+                var b2 = toInt_0(conf.get_za3lpa$(5));
+                var c0 = toInt_0(conf.get_za3lpa$(6));
+                var c1 = toInt_0(conf.get_za3lpa$(7));
+                var c2 = toInt_0(conf.get_za3lpa$(8));
+                var j0 = toInt_0(conf.get_za3lpa$(9));
+                var j1 = toInt_0(conf.get_za3lpa$(10));
+                var j2 = toInt_0(conf.get_za3lpa$(11));
+                var pc0 = toInt_0(conf.get_za3lpa$(12));
+                var pc1 = toInt_0(conf.get_za3lpa$(13));
+                var pc2 = toInt_0(conf.get_za3lpa$(14));
+                var jie1 = toInt_0(conf.get_za3lpa$(15));
+                var jie2 = toInt_0(conf.get_za3lpa$(16));
+                var l = toInt_0(conf.get_za3lpa$(17));
+                var zy = toInt_0(conf.get_za3lpa$(18));
                 if (a0 > b0 || a0 < 0 || b0 > 100)
                   return null;
                 if (a1 > b1 || a1 < 0 || b1 > 100)

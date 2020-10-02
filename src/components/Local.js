@@ -1,7 +1,7 @@
 import React from 'react';
 import Connect from './Connect'
 import { Bar } from 'react-chartjs-2';
-import { Button, Shell, Card, Grid, Icon, Divider, Range, Switch, Select } from '@alifd/next';
+import { Button, Shell, Card, Grid, Icon, Divider, Range, Switch, Select, Input, Notification } from '@alifd/next';
 import Logo from '../logo.svg'
 import { withRouter } from "react-router";
 import { OpenDGLab, WaveCenter } from '../services/DGLab'
@@ -23,7 +23,12 @@ class Local extends React.Component {
         dataA: [],
         dataB: [],
         waveLagA: 0,
-        waveLagB: 0
+        waveLagB: 0,
+        customWave: '',
+        customWaveUnsaved: '',
+        customWaveSaved: true,
+        autoChangeA: 200,
+        autoChangeB: 200
     }
     lastDataA = Date.now()
     lastDataB = Date.now()
@@ -82,7 +87,7 @@ class Local extends React.Component {
           }]
         }
       }
-    waveSource = WaveCenter.Companion.getBasicWaveList().map((v) => { return { label: v, value: v } })
+    waveSource = WaveCenter.Companion.getBasicWaveList().concat('Custom').map((v) => { return { label: v, value: v } })
     onClickConnect = () => {
         this.setState({showConnect: true})
     }
@@ -90,10 +95,10 @@ class Local extends React.Component {
         this.props.history.push("/")
     }
     onChangeChannelAutoA = (v) => { 
-        this.setState({channelAAuto: v}) 
+        this.setState({channelAAuto: v, autoChangeA: 200 }) 
     }
     onChangeChannelAutoB = (v) => { 
-        this.setState({channelBAuto: v}) 
+        this.setState({channelBAuto: v, autoChangeB: 200 }) 
     }
     onChannelAIncrease = () => {
         let strength = 274
@@ -161,13 +166,25 @@ class Local extends React.Component {
     }
     handleWaveChangeA = (value) => {
         if (typeof value !== 'string') value = this.state.waveA
-        let wave = WaveCenter.Companion.getBasicWave(value)
+        let wave = null
+        if (value === 'Custom') {
+            if (this.state.customWave === '') return
+            wave = WaveCenter.Companion.fromOpenDGWaveGen(this.state.customWave)
+        } else {
+            wave = WaveCenter.Companion.getBasicWave(value)
+        }
         this.setState({ waveA: value })
         window.dglab.eStimStatus.wave.getWaveCenterA().selectWave(wave)
     }
     handleWaveChangeB = (value) => {
         if (typeof value !== 'string') value = this.state.waveB
-        let wave = WaveCenter.Companion.getBasicWave(value)
+        let wave = null
+        if (value === 'Custom') {
+            if (this.state.customWave=== '') return
+            wave = WaveCenter.Companion.fromOpenDGWaveGen(this.state.customWave)
+        } else {
+            wave = WaveCenter.Companion.getBasicWave(value)
+        }
         this.setState({ waveB: value })
         window.dglab.eStimStatus.wave.getWaveCenterB().selectWave(wave)
     }
@@ -198,6 +215,18 @@ class Local extends React.Component {
                 })
                 if (waveA !== null)
                   window.dgble.eStimStatus.waveB.writeValueWithoutResponse(Uint8Array.from(waveA))
+                if (this.state.channelAAuto) {
+                    let last = this.state.autoChangeA - 1
+                    if (last === 0) {
+                        this.setState({ autoChangeA: 200 })
+                        let rlength = this.waveSource.length
+                        if (this.state.customWave === '') rlength = rlength - 1
+                        let random = Math.floor(Math.random() * rlength)
+                        this.handleWaveChangeA(this.waveSource[random].value)
+                    } else {
+                        this.setState({ autoChangeA: last })
+                    }
+                }
             }
         }, 100)
         this.timerB = setInterval(() => {
@@ -220,6 +249,18 @@ class Local extends React.Component {
                 })
                 if (waveB !== null)
                   window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
+                if (this.state.channelBAuto) {
+                    let last = this.state.autoChangeB - 1
+                    if (last === 0) {
+                        this.setState({ autoChangeB: 200 })
+                        let rlength = this.waveSource.length
+                        if (this.state.customWave === '') rlength = rlength - 1
+                        let random = Math.floor(Math.random() * rlength)
+                        this.handleWaveChangeB(this.waveSource[random].value)
+                    } else {
+                        this.setState({ autoChangeB: last })
+                    }
+                }
             }
         }, 100)
     }
@@ -243,6 +284,28 @@ class Local extends React.Component {
             window.dgble.device.gatt.disconnect()
             delete window.dgble
             delete window.dglab
+        }
+    }
+    onClickSaveCustomWave = () => {
+        let wave = WaveCenter.Companion.fromOpenDGWaveGen(this.state.customWaveUnsaved)
+        if (wave === null) {
+            Notification.open({
+                title: '错误',
+                content: '由于波形无法解析 保存失败',
+                duration: 2000,
+                type: 'error'
+            });
+        } else {
+            this.setState({
+                customWave: this.state.customWaveUnsaved,
+                customWaveSaved: true
+            })
+            Notification.open({
+                title: '成功',
+                content: '保存成功',
+                duration: 2000,
+                type: 'success'
+            });
         }
     }
     render() {
@@ -318,9 +381,9 @@ class Local extends React.Component {
                                     />
                                     </div>
                                     <Divider />
-                                    <Switch disabled style={{width: '70px'}} checkedChildren="自动" unCheckedChildren="手动" value={this.state.channelAAuto} onChange={this.onChangeChannelAutoA} />
+                                    <Switch style={{width: '70px'}} checkedChildren="自动" unCheckedChildren="手动" value={this.state.channelAAuto} onChange={this.onChangeChannelAutoA} />
                                     <p></p>
-                                    <Select onChange={this.handleWaveChangeA} style={{display: 'block'}} defaultValue={WaveCenter.Companion.getBasicWaveList()[0]} dataSource={this.waveSource} disabled={this.state.channelAAuto} />
+                                    <Select onChange={this.handleWaveChangeA} style={{display: 'block'}} defaultValue={WaveCenter.Companion.getBasicWaveList()[0]} value={this.state.waveA} dataSource={this.waveSource} disabled={this.state.channelAAuto} />
                                 </Card.Content>
                             </Card>
                         </Col>
@@ -336,9 +399,21 @@ class Local extends React.Component {
                                     />
                                     </div>
                                     <Divider />
-                                    <Switch disabled style={{width: '70px'}} checkedChildren="自动" unCheckedChildren="手动" value={this.state.channelBAuto} onChange={this.onChangeChannelAutoB} />
+                                    <Switch style={{width: '70px'}} checkedChildren="自动" unCheckedChildren="手动" value={this.state.channelBAuto} onChange={this.onChangeChannelAutoB} />
                                     <p></p>
-                                    <Select onChange={this.handleWaveChangeB} style={{display: 'block'}} defaultValue={WaveCenter.Companion.getBasicWaveList()[0]} dataSource={this.waveSource} disabled={this.state.channelBAuto} />
+                                    <Select onChange={this.handleWaveChangeB} style={{display: 'block'}} defaultValue={WaveCenter.Companion.getBasicWaveList()[0]} value={this.state.waveB} dataSource={this.waveSource} disabled={this.state.channelBAuto} />
+                                </Card.Content>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row gutter={8}>
+                        <Col span={24}>
+                            <Card free style={{ margin: '2px' }}>
+                                <Card.Header title="自定义波形"/>
+                                <Card.Content>
+                                <Input.Group style={{ width: '100%' }} addonAfter={<Button warning type={this.state.customWaveSaved ? "normal" : "primary"} onClick={this.onClickSaveCustomWave}>确定设置</Button>}>
+                                    <Input style={{ width: '100%' }} placeholder="自定义波形" value={this.state.customWaveUnsaved} onChange={ (v) => { this.setState({ customWaveSaved: false, customWaveUnsaved: v }) } }/>
+                                </Input.Group>
                                 </Card.Content>
                             </Card>
                         </Col>
