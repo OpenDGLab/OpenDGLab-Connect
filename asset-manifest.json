@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/OpenDGLab-Connect/static/css/main.d6d40d08.chunk.css",
-    "main.js": "/OpenDGLab-Connect/static/js/main.5cc8e521.chunk.js",
-    "main.js.map": "/OpenDGLab-Connect/static/js/main.5cc8e521.chunk.js.map",
-    "runtime-main.js": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js",
-    "runtime-main.js.map": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js.map",
-    "static/js/2.000d63f6.chunk.js": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js",
-    "static/js/2.000d63f6.chunk.js.map": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js.map",
-    "index.html": "/OpenDGLab-Connect/index.html",
-    "precache-manifest.df369b348f249f78c992e4d192df3fdf.js": "/OpenDGLab-Connect/precache-manifest.df369b348f249f78c992e4d192df3fdf.js",
-    "service-worker.js": "/OpenDGLab-Connect/service-worker.js",
-    "static/css/main.d6d40d08.chunk.css.map": "/OpenDGLab-Connect/static/css/main.d6d40d08.chunk.css.map",
-    "static/js/2.000d63f6.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.000d63f6.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/OpenDGLab-Connect/static/media/logo.1cd43fc4.svg"
+    "main.css": "/static/css/main.333ac8bc.chunk.css",
+    "main.js": "/static/js/main.cc48695c.chunk.js",
+    "main.js.map": "/static/js/main.cc48695c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.aefc068e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.aefc068e.js.map",
+    "static/js/2.fbd3f5b1.chunk.js": "/static/js/2.fbd3f5b1.chunk.js",
+    "static/js/2.fbd3f5b1.chunk.js.map": "/static/js/2.fbd3f5b1.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.a612aaff240863f6b37b2a27b8e7e0d6.js": "/precache-manifest.a612aaff240863f6b37b2a27b8e7e0d6.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.333ac8bc.chunk.css.map": "/static/css/main.333ac8bc.chunk.css.map",
+    "static/js/2.fbd3f5b1.chunk.js.LICENSE.txt": "/static/js/2.fbd3f5b1.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/static/media/logo.1cd43fc4.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a78c9708.js",
-    "static/js/2.000d63f6.chunk.js",
-    "static/css/main.d6d40d08.chunk.css",
-    "static/js/main.5cc8e521.chunk.js"
+    "static/js/runtime-main.aefc068e.js",
+    "static/js/2.fbd3f5b1.chunk.js",
+    "static/css/main.333ac8bc.chunk.css",
+    "static/js/main.cc48695c.chunk.js"
   ]
 }
