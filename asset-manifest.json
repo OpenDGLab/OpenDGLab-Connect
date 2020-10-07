@@ -1,23 +1,24 @@
 {
   "files": {
     "main.css": "/OpenDGLab-Connect/static/css/main.333ac8bc.chunk.css",
-    "main.js": "/OpenDGLab-Connect/static/js/main.56b2883b.chunk.js",
-    "main.js.map": "/OpenDGLab-Connect/static/js/main.56b2883b.chunk.js.map",
+    "main.js": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js",
+    "main.js.map": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js.map",
     "runtime-main.js": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js",
     "runtime-main.js.map": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js.map",
-    "static/js/2.85c7fdff.chunk.js": "/OpenDGLab-Connect/static/js/2.85c7fdff.chunk.js",
-    "static/js/2.85c7fdff.chunk.js.map": "/OpenDGLab-Connect/static/js/2.85c7fdff.chunk.js.map",
+    "static/js/2.e394d2a2.chunk.js": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js",
+    "static/js/2.e394d2a2.chunk.js.map": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js.map",
     "index.html": "/OpenDGLab-Connect/index.html",
-    "precache-manifest.3881b1b6d83cb973f60fa245551e3862.js": "/OpenDGLab-Connect/precache-manifest.3881b1b6d83cb973f60fa245551e3862.js",
+    "precache-manifest.d5c5580976a9846e4c42afb0d4c78b66.js": "/OpenDGLab-Connect/precache-manifest.d5c5580976a9846e4c42afb0d4c78b66.js",
     "service-worker.js": "/OpenDGLab-Connect/service-worker.js",
     "static/css/main.333ac8bc.chunk.css.map": "/OpenDGLab-Connect/static/css/main.333ac8bc.chunk.css.map",
-    "static/js/2.85c7fdff.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.85c7fdff.chunk.js.LICENSE.txt",
+    "static/js/2.e394d2a2.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js.LICENSE.txt",
+    "static/js/main.76696836.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/OpenDGLab-Connect/static/media/logo.1cd43fc4.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.a78c9708.js",
-    "static/js/2.85c7fdff.chunk.js",
+    "static/js/2.e394d2a2.chunk.js",
     "static/css/main.333ac8bc.chunk.css",
-    "static/js/main.56b2883b.chunk.js"
+    "static/js/main.76696836.chunk.js"
   ]
 }
