@@ -1,5 +1,5 @@
 import React from 'react';
-import { Overlay, Card, Button } from '@alifd/next';
+import { Overlay, Card, Button, Notification } from '@alifd/next';
 import { OpenDGLab } from '../services/DGLab'
 import { fireChange } from '../Utils'
 
@@ -20,11 +20,22 @@ class Connect extends React.Component {
         }
     }
     onClickStartRemote = () => {
-        let { setRemoteMode } = this.props
-        if (setRemoteMode(true)) {
-
+        let { setRemoteMode, setClose } = this.props
+        if (setRemoteMode()) {
+            Notification.open({
+                title: '注意',
+                content: '由于浏览器单线程限制，此功能体验不佳。',
+                duration: 5000,
+                type: 'warning'
+            })
+            setClose()
         } else {
-
+            Notification.open({
+                title: '错误',
+                content: '连接未准备好，也许您没有登录到 DG-Lab 服务器',
+                duration: 1000,
+                type: 'error'
+            })
         }
     }
     onConnectClick = () => {

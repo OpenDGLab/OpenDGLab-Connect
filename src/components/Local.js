@@ -1,16 +1,20 @@
 import React from 'react';
 import Connect from './Connect'
+import RemoteServer from './RemoteServer'
+import AuthDialog from './AuthDialog'
 import { Bar } from 'react-chartjs-2';
 import { Button, Shell, Card, Grid, Icon, Divider, Range, Switch, Select, Input, Notification } from '@alifd/next';
 import Logo from '../logo.svg'
 import { withRouter } from "react-router";
-import { OpenDGLab, WaveCenter } from '../services/DGLab'
+import { OpenDGLab, WaveCenter, KDataUtils } from '../services/DGLab'
 
 const { Row, Col } = Grid;
 
 class Local extends React.Component {
     state = {
         showConnect: false,
+        showRemoteServer: false,
+        showAuthOverlay: false,
         isConnect: false,
         strengthA: 0,
         strengthB: 0,
@@ -30,6 +34,8 @@ class Local extends React.Component {
         autoChangeA: 200,
         autoChangeB: 200
     }
+    lostA = 0
+    lostB = 0
     lastDataA = Date.now()
     lastDataB = Date.now()
     labels = new Array(100).fill('')
@@ -197,68 +203,112 @@ class Local extends React.Component {
         window.addEventListener('waveBchanged', this.handleWaveChangeB)
         this.timerA = setInterval(()=> {
             if (window.dgble && this.state.isConnect) {
-                let lag = Date.now() - this.lastDataA
-                let wlag = 0
-                if (lag > 100) {
-                    wlag = Math.ceil((lag - 100)/100.0)
-                }
-                this.setState({ waveLagA: wlag })
-                this.lastDataA = Date.now()
-                let waveA = window.dglab.eStimStatus.wave.getWaveCenterA().waveTick()
-                let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterA().getWavePlot())
-                let plotData = this.state.dataA.concat(plot)
-                if (plotData.length > 100) {
-                    plotData = plotData.slice(plotData.length - 100)
-                }
-                this.setState({
-                    dataA: plotData
-                })
-                if (waveA !== null)
-                  window.dgble.eStimStatus.waveB.writeValueWithoutResponse(Uint8Array.from(waveA))
-                if (this.state.channelAAuto) {
-                    let last = this.state.autoChangeA - 1
-                    if (last === 0) {
-                        this.setState({ autoChangeA: 200 })
-                        let rlength = this.waveSource.length
-                        if (this.state.customWave === '') rlength = rlength - 1
-                        let random = Math.floor(Math.random() * rlength)
-                        this.handleWaveChangeA(this.waveSource[random].value)
+                if (this.state.showRemoteServer) {
+                    let data = this.remoteDataA.shift()
+                    if (data !== undefined) {
+                        this.lostA = 0
+                        let wa = data.bytes
+                        let strength = data.strength
+                        let waveA = KDataUtils.convertStringToByteArray(wa)
+                        let power = window.dglab.eStimStatus.abPower.setABPower(strength, window.dglab.eStimStatus.abPower.getBPower())
+                        window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                        window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveA))
                     } else {
-                        this.setState({ autoChangeA: last })
+                        this.lostA = this.lostA + 1
+                        if (this.lostA > 4 && this.state.strengthA !== 0) {
+                            let power = window.dglab.eStimStatus.abPower.setABPower(0, window.dglab.eStimStatus.abPower.getBPower())
+                            window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                        }
+                    }
+                } else {
+                    let lag = Date.now() - this.lastDataA
+                    let wlag = 0
+                    if (lag > 100) {
+                        wlag = Math.ceil((lag - 100)/100.0)
+                    }
+                    this.setState({ waveLagA: wlag })
+                    this.lastDataA = Date.now()
+                    let waveA = null
+                    if (this.state.strengthA !== 0) {
+                        waveA = window.dglab.eStimStatus.wave.getWaveCenterA().waveTick()
+                        let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterA().getWavePlot())
+                        let plotData = this.state.dataA.concat(plot)
+                        if (plotData.length > 100) {
+                            plotData = plotData.slice(plotData.length - 100)
+                        }
+                        this.setState({
+                            dataA: plotData
+                        })
+                    }
+                    if (waveA !== null)
+                    window.dgble.eStimStatus.waveB.writeValueWithoutResponse(Uint8Array.from(waveA))
+                    if (this.state.channelAAuto) {
+                        let last = this.state.autoChangeA - 1
+                        if (last === 0) {
+                            this.setState({ autoChangeA: 200 })
+                            let rlength = this.waveSource.length
+                            if (this.state.customWave === '') rlength = rlength - 1
+                            let random = Math.floor(Math.random() * rlength)
+                            this.handleWaveChangeA(this.waveSource[random].value)
+                        } else {
+                            this.setState({ autoChangeA: last })
+                        }
                     }
                 }
             }
         }, 100)
         this.timerB = setInterval(() => {
             if (window.dgble && this.state.isConnect) {
-                let lag = Date.now() - this.lastDataB
-                let wlag = 0
-                if (lag > 100) {
-                    wlag = Math.ceil((lag - 100)/100.0)
-                }
-                this.setState({ waveLagB: wlag })
-                this.lastDataB = Date.now()
-                let waveB = window.dglab.eStimStatus.wave.getWaveCenterB().waveTick()
-                let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterB().getWavePlot())
-                let plotData = this.state.dataB.concat(plot)
-                if (plotData.length > 100) {
-                    plotData = plotData.slice(plotData.length - 100)
-                }
-                this.setState({
-                    dataB: plotData
-                })
-                if (waveB !== null)
-                  window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
-                if (this.state.channelBAuto) {
-                    let last = this.state.autoChangeB - 1
-                    if (last === 0) {
-                        this.setState({ autoChangeB: 200 })
-                        let rlength = this.waveSource.length
-                        if (this.state.customWave === '') rlength = rlength - 1
-                        let random = Math.floor(Math.random() * rlength)
-                        this.handleWaveChangeB(this.waveSource[random].value)
+                if (this.state.showRemoteServer) {
+                    let data = this.remoteDataB.shift()
+                    if (data !== undefined) {
+                        this.lostB = 0
+                        let wa = data.bytes
+                        let strength = data.strength
+                        let waveB = KDataUtils.convertStringToByteArray(wa)
+                        let power = window.dglab.eStimStatus.abPower.setABPower(window.dglab.eStimStatus.abPower.getAPower(), strength)
+                        window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                        window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
                     } else {
-                        this.setState({ autoChangeB: last })
+                        this.lostB = this.lostB + 1
+                        if (this.lostB > 4 && this.state.strengthB !== 0) { 
+                            let power = window.dglab.eStimStatus.abPower.setABPower(window.dglab.eStimStatus.abPower.getAPower(), 0)
+                            window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                        }
+                    }
+                } else {
+                    let lag = Date.now() - this.lastDataB
+                    let wlag = 0
+                    if (lag > 100) {
+                        wlag = Math.ceil((lag - 100)/100.0)
+                    }
+                    this.setState({ waveLagB: wlag })
+                    this.lastDataB = Date.now()
+                    let waveB = null
+                    if (this.state.strengthB !== 0) {
+                        waveB = window.dglab.eStimStatus.wave.getWaveCenterB().waveTick()
+                        let plot = Array.from(window.dglab.eStimStatus.wave.getWaveCenterB().getWavePlot())
+                        let plotData = this.state.dataB.concat(plot)
+                        if (plotData.length > 100) {
+                            plotData = plotData.slice(plotData.length - 100)
+                        }
+                        this.setState({
+                            dataB: plotData
+                        })
+                    }
+                    if (waveB !== null)
+                      window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
+                    if (this.state.channelBAuto) {
+                        let last = this.state.autoChangeB - 1
+                        if (last === 0) {
+                            this.setState({ autoChangeB: 200 })
+                            let rlength = this.waveSource.length
+                            if (this.state.customWave === '') rlength = rlength - 1
+                            let random = Math.floor(Math.random() * rlength)
+                            this.handleWaveChangeB(this.waveSource[random].value)
+                        } else {
+                            this.setState({ autoChangeB: last })
+                        }
                     }
                 }
             }
@@ -308,10 +358,46 @@ class Local extends React.Component {
             });
         }
     }
+    setRemoteServer = () => {
+        if (window.dgremote.auth.isReady()) {
+            this.setState({ showRemoteServer: true })
+            return true
+        } else {
+            this.setState({ showConnect: false, showAuthOverlay: true })
+            return false
+        }
+    }
+    setAuthDialogClose = (v) => {
+        this.setState({ showAuthOverlay: false })
+    }
+    setLogined = (v) => {}
+    remoteDataA = []
+    remoteDataB = []
     render() {
         let connect = null
+        let remoteServer = null
+        let auth = null
         if (this.state.showConnect) {
-            connect = <Connect setClose={()=>{this.setState({showConnect: false})}} connCallback={ (isConn) => { this.setState({isConnect: isConn}) } } />
+            connect = <Connect setClose={()=>{this.setState({showConnect: false})}} connCallback={ (isConn) => { this.setState({isConnect: isConn}) } } setRemoteMode={ this.setRemoteServer } />
+        }
+        if (this.state.showRemoteServer) {
+            remoteServer = <RemoteServer 
+              setClose={() => { this.setState({showRemoteServer: false}) }} 
+              getStrengthA={ () => { return this.state.strengthA } } 
+              getStrengthB={ () => { return this.state.strengthB } }
+              postRemoteData={ (data) => { 
+                data.forEach((v) => {
+                    if (v.channel === 1) {
+                        this.remoteDataA.push(v)
+                    } else if (v.channel === 2) {
+                        this.remoteDataB.push(v)
+                    }
+                })
+              }}
+            />
+        }
+        if (this.state.showAuthOverlay) {
+            auth = <AuthDialog setClose={this.setAuthDialogClose} setLogined={this.setLogined} />
         }
         return (
             <>
@@ -421,7 +507,9 @@ class Local extends React.Component {
                     </div>
                 </Shell.Content>
             </Shell>
+            {auth}
             {connect}
+            {remoteServer}
             </>
         )
     }

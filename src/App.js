@@ -41,8 +41,7 @@ class App extends React.Component {
         url: 'https://corsanywhere.herokuapp.com/' + authToken.url + '',
         headers: Object.assign({
             'Content-Type': authToken.contentType,
-            'X-Requested-With': '',
-            'Origin': ''
+            'X-Requested-With': ''
         }, Object.assign(...authToken.headers.map((v)=>{ 
           let hed = {}
           hed[v.key] = v.value
