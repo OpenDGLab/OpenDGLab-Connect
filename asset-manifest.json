@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/OpenDGLab-Connect/static/css/main.333ac8bc.chunk.css",
-    "main.js": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js",
-    "main.js.map": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js.map",
+    "main.js": "/OpenDGLab-Connect/static/js/main.a131a195.chunk.js",
+    "main.js.map": "/OpenDGLab-Connect/static/js/main.a131a195.chunk.js.map",
     "runtime-main.js": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js",
     "runtime-main.js.map": "/OpenDGLab-Connect/static/js/runtime-main.a78c9708.js.map",
-    "static/js/2.e394d2a2.chunk.js": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js",
-    "static/js/2.e394d2a2.chunk.js.map": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js.map",
+    "static/js/2.7f558dea.chunk.js": "/OpenDGLab-Connect/static/js/2.7f558dea.chunk.js",
+    "static/js/2.7f558dea.chunk.js.map": "/OpenDGLab-Connect/static/js/2.7f558dea.chunk.js.map",
     "index.html": "/OpenDGLab-Connect/index.html",
-    "precache-manifest.d5c5580976a9846e4c42afb0d4c78b66.js": "/OpenDGLab-Connect/precache-manifest.d5c5580976a9846e4c42afb0d4c78b66.js",
+    "precache-manifest.404893a3cf7e276ffd9966473506cc4a.js": "/OpenDGLab-Connect/precache-manifest.404893a3cf7e276ffd9966473506cc4a.js",
     "service-worker.js": "/OpenDGLab-Connect/service-worker.js",
     "static/css/main.333ac8bc.chunk.css.map": "/OpenDGLab-Connect/static/css/main.333ac8bc.chunk.css.map",
-    "static/js/2.e394d2a2.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.e394d2a2.chunk.js.LICENSE.txt",
-    "static/js/main.76696836.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/main.76696836.chunk.js.LICENSE.txt",
+    "static/js/2.7f558dea.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/2.7f558dea.chunk.js.LICENSE.txt",
+    "static/js/main.a131a195.chunk.js.LICENSE.txt": "/OpenDGLab-Connect/static/js/main.a131a195.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/OpenDGLab-Connect/static/media/logo.1cd43fc4.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.a78c9708.js",
-    "static/js/2.e394d2a2.chunk.js",
+    "static/js/2.7f558dea.chunk.js",
     "static/css/main.333ac8bc.chunk.css",
-    "static/js/main.76696836.chunk.js"
+    "static/js/main.a131a195.chunk.js"
   ]
 }
