@@ -41,6 +41,8 @@ class Local extends React.Component {
     labels = new Array(100).fill('')
     timerA = null
     timerB = null
+    remoteALast = -1
+    remoteBLast = -1
     get dataA() {
         return {
             labels: this.labels,
@@ -210,14 +212,18 @@ class Local extends React.Component {
                         let wa = data.bytes
                         let strength = data.strength
                         let waveA = KDataUtils.convertStringToByteArray(wa)
-                        let power = window.dglab.eStimStatus.abPower.setABPower(strength, window.dglab.eStimStatus.abPower.getBPower())
-                        window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
                         window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveA))
+                        if (this.remoteALast !== strength) {
+                            let power = window.dglab.eStimStatus.abPower.setABPower(strength, window.dglab.eStimStatus.abPower.getBPower())
+                            window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                            this.remoteALast = strength
+                        }
                     } else {
                         this.lostA = this.lostA + 1
                         if (this.lostA > 4 && this.state.strengthA !== 0) {
                             let power = window.dglab.eStimStatus.abPower.setABPower(0, window.dglab.eStimStatus.abPower.getBPower())
                             window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                            this.remoteALast = 0
                         }
                     }
                 } else {
@@ -266,12 +272,16 @@ class Local extends React.Component {
                         let wa = data.bytes
                         let strength = data.strength
                         let waveB = KDataUtils.convertStringToByteArray(wa)
-                        let power = window.dglab.eStimStatus.abPower.setABPower(window.dglab.eStimStatus.abPower.getAPower(), strength)
-                        window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
                         window.dgble.eStimStatus.waveA.writeValueWithoutResponse(Uint8Array.from(waveB))
+                        if (this.remoteBLast !== strength) {
+                            let power = window.dglab.eStimStatus.abPower.setABPower(window.dglab.eStimStatus.abPower.getAPower(), strength)
+                            window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
+                            this.remoteBLast = strength
+                        }
                     } else {
                         this.lostB = this.lostB + 1
                         if (this.lostB > 4 && this.state.strengthB !== 0) { 
+                            this.remoteBLast = 0
                             let power = window.dglab.eStimStatus.abPower.setABPower(window.dglab.eStimStatus.abPower.getAPower(), 0)
                             window.dgble.eStimStatus.abpower.writeValueWithoutResponse(Uint8Array.from(power.data))
                         }
@@ -361,6 +371,8 @@ class Local extends React.Component {
     setRemoteServer = () => {
         if (window.dgremote.auth.isReady()) {
             this.setState({ showRemoteServer: true })
+            this.remoteALast = -1
+            this.remoteBLast = -1
             return true
         } else {
             this.setState({ showConnect: false, showAuthOverlay: true })
@@ -382,7 +394,11 @@ class Local extends React.Component {
         }
         if (this.state.showRemoteServer) {
             remoteServer = <RemoteServer 
-              setClose={() => { this.setState({showRemoteServer: false}) }} 
+              setClose={() => { 
+                  this.setState({showRemoteServer: false})
+                  this.remoteALast = -1
+                  this.remoteBLast = -1
+              }} 
               getStrengthA={ () => { return this.state.strengthA } } 
               getStrengthB={ () => { return this.state.strengthB } }
               postRemoteData={ (data) => { 

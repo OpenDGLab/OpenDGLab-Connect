@@ -1,4 +1,3 @@
-/* eslint-disable */
 (function (_, Kotlin, $module$kotlinx_serialization_kotlinx_serialization_json_jsLegacy, $module$kotlinx_serialization_kotlinx_serialization_core_jsLegacy, $module$Kotlin_DateTime_library_kotlinx_datetime_jsLegacy) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
@@ -11,6 +10,7 @@
   var throwCCE = Kotlin.throwCCE;
   var contains = Kotlin.kotlin.text.contains_li3zpu$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var Pair = Kotlin.kotlin.Pair;
   var IntRange = Kotlin.kotlin.ranges.IntRange;
   var removeFirstOrNull = Kotlin.kotlin.collections.removeFirstOrNull_vvxzk3$;
   var List = Kotlin.kotlin.collections.List;
@@ -167,6 +167,9 @@
     var value_0 = new Structure$NIM$V1$Disconnect(200, $receiver.encodeToString_tf03ej$(Kotlin.isType(tmp$_1 = serializer($receiver.serializersModule, createKType(getKClass(Structure$NIM$V1$DisconnectDetail), [], false)), KSerializer) ? tmp$_1 : throwCCE(), value), 1);
     var tmp$_2;
     return new Structure$NIMMessage(tmp$, tmp$_0.encodeToString_tf03ej$(Kotlin.isType(tmp$_2 = serializer(tmp$_0.serializersModule, createKType(getKClass(Structure$NIM$V1$Disconnect), [], false)), KSerializer) ? tmp$_2 : throwCCE(), value_0));
+  };
+  DGRemoteV1$Controller.prototype.getLimit = function () {
+    return new Pair(this.limitA_0, this.limitB_0);
   };
   DGRemoteV1$Controller.prototype.canOnline = function () {
     return this.toID_0.length > 0;
@@ -459,6 +462,9 @@
   DGRemoteV2$Controller.prototype.isConnect = function () {
     return this.isConnected;
   };
+  DGRemoteV2$Controller.prototype.getLimit = function () {
+    return new Pair(this.limitA, this.limitB);
+  };
   DGRemoteV2$Controller.prototype.shouldConfig = function () {
     if (this.shouldDoConfig) {
       this.shouldDoConfig = false;
@@ -472,7 +478,7 @@
       return;
     if (channel === 2 && strength > this.limitB)
       return;
-    this.sendArray.add_11rb$(new Structure$NIM$V2$WaveAndStrength(bytes, channel, strength));
+    this.sendArray.add_11rb$(new Structure$NIM$V2$WaveAndStrength(bytes, channel, strength - 1 | 0));
     this.sendPack();
   };
   DGRemoteV2$Controller.prototype.forcePack = function () {

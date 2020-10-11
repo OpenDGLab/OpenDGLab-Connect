@@ -26,7 +26,7 @@ function ModeSelection({auth, showAuth}) {
                 <p></p>
                 <center><Button type="normal" warning size="large" className="odgl-p-a-1 odgl-flexable-fullwidth" onClick={onClickLocal}>本地模式</Button></center>
                 <p></p>
-                <center><Button type="normal" warning size="large" className="odgl-p-a-1 odgl-flexable-fullwidth" disabled onClick={onClickRemote}>远程模式</Button></center>
+                <center><Button type="normal" warning size="large" className="odgl-p-a-1 odgl-flexable-fullwidth" onClick={onClickRemote}>远程模式</Button></center>
             </div>
         </div>
     )

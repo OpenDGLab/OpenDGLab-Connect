@@ -7,15 +7,22 @@ import {
 import { defaults } from 'react-chartjs-2';
 import ModeSelection from './components/ModeSelection';
 import LocalWithRouter from './components/Local';
-import Remote from './components/Remote';
+import RemoteWithRouter from './components/Remote';
 import AuthDialog from './components/AuthDialog';
 import { Auth } from './services/OpenDGLab-Remote'
 import axios from 'axios'
+import { fireChange } from './Utils'
 defaults.global.animation = false;
 class App extends React.Component {
   state = {
     logined: '请稍后 DG-Lab Server 响应',
     authOverlay: false
+  }
+  constructor() {
+    super()
+    window.dgremote = {
+      auth: new Auth()
+    }
   }
   setAuthDialogClose = () => {
     this.setState({ authOverlay: false })
@@ -31,9 +38,6 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    window.dgremote = {
-      auth: new Auth()
-    }
     if (window.localStorage.token && window.localStorage.uuid) {
       let authToken = window.dgremote.auth.loginWithToken(window.localStorage.token)
       axios({
@@ -54,13 +58,19 @@ class App extends React.Component {
           this.setLogined(true)
         } else {
           this.setLogined(false)
+          window.localStorage.clear()
         }
+        fireChange('logined')
       }).catch((error) => {
         console.error(error)
+        window.localStorage.clear()
+        fireChange('logined')
       })
       this.setLogined(true)
     } else {
       this.setLogined(false)
+      window.localStorage.clear()
+      fireChange('logined')
     }
   }
   componentWillUnmount() {
@@ -81,7 +91,7 @@ class App extends React.Component {
                   <LocalWithRouter />
                 </Route>
                 <Route exact path="/remote">
-                  <Remote remote={window.location.hash.substring(1)}/>
+                  <RemoteWithRouter remote={window.location.hash.substring(1)} auth={this.setAuthDialogOpen}/>
                 </Route>
               </Switch>
             </Router>
