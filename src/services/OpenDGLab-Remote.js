@@ -48,14 +48,14 @@
   }
   Auth.prototype.loginWithEmail = function (email) {
     this.email_0 = email;
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/emailCodeSend', 'POST', 'email=' + email, 0);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/emailCodeSend', 'POST', 'email=' + email, 0);
   };
   Auth.prototype.loginCode = function (code) {
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/emailRegVerify', 'POST', 'email=' + this.email_0 + '&psw=' + code, 1);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/emailRegVerify', 'POST', 'email=' + this.email_0 + '&psw=' + code, 1);
   };
   Auth.prototype.loginWithToken = function (token) {
     this.token_0 = token;
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', token), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/tokenVerify', 'POST', '', 2);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', token), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/tokenVerify', 'POST', '', 2);
   };
   Auth.prototype.isReady = function () {
     var tmp$ = this.token_0.length > 0;
@@ -143,7 +143,7 @@
     this.packedSendArray_0 = ArrayList_init();
   }
   DGRemoteV1$Controller.prototype.joinControl = function () {
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/joinControl', 'POST', 'randomCode=' + this.randomCode, 0);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/joinControl', 'POST', 'randomCode=' + this.randomCode, 0);
   };
   DGRemoteV1$Controller.prototype.getNIMConnect = function () {
     return new Structure$NIMAuth(Structure$Companion_getInstance().appKey, this.auth.getUUID(), this.auth.getToken());
@@ -306,10 +306,10 @@
     this.lastHeartbeat_0 = L0;
   }
   DGRemoteV1$Controlled.prototype.requestControl = function () {
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/getIMConnectCode', 'POST', 'type=1&strengthA=' + this.limitA + '&strengthB=' + this.limitB + '&limited=0', 0);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/getIMConnectCode', 'POST', 'type=1&strengthA=' + this.limitA + '&strengthB=' + this.limitB + '&limited=0', 0);
   };
   DGRemoteV1$Controlled.prototype.logoutControl = function () {
-    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'http://dungeon-server.top:8888/accidentalIMLogOut', 'POST', 'a=0', 1);
+    return new Structure$Request([new Structure$Header('device', 'android'), new Structure$Header('token', this.auth.getToken()), new Structure$Header('la', '0')], 'application/x-www-form-urlencoded', 'https://dungeon-server.com:8445/accidentalIMLogOut', 'POST', 'a=0', 1);
   };
   DGRemoteV1$Controlled.prototype.getQrUrl = function () {
     var tmp$;
@@ -800,7 +800,7 @@
   }
   function Structure$Companion() {
     Structure$Companion_instance = this;
-    this.baseUrl = 'http://dungeon-server.top:8888';
+    this.baseUrl = 'https://dungeon-server.com:8445';
     this.qrUrl = 'http://dungeon-lab.cn/appdownload.html';
     this.appKey = '9dac64d02f2e5f11aa5e887d809e911c';
   }
