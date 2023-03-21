@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f1b38f4df8acbf4866387f48ee7fa84c",
+    "revision": "206bed2c9731cf0caaf4869e9f646c87",
     "url": "/OpenDGLab-Connect/index.html"
   },
   {
-    "revision": "fa7fecb367e1ccac18b2",
+    "revision": "22359020db638a236680",
     "url": "/OpenDGLab-Connect/static/css/main.333ac8bc.chunk.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/OpenDGLab-Connect/static/js/2.7f558dea.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fa7fecb367e1ccac18b2",
-    "url": "/OpenDGLab-Connect/static/js/main.a131a195.chunk.js"
+    "revision": "22359020db638a236680",
+    "url": "/OpenDGLab-Connect/static/js/main.a05766b9.chunk.js"
   },
   {
     "revision": "32bc784ce3579c99d1832b42b6f7a842",
-    "url": "/OpenDGLab-Connect/static/js/main.a131a195.chunk.js.LICENSE.txt"
+    "url": "/OpenDGLab-Connect/static/js/main.a05766b9.chunk.js.LICENSE.txt"
   },
   {
     "revision": "b3560edfcba8b7449dc9",
